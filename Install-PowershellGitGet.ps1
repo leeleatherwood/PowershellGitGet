@@ -32,3 +32,12 @@ Import-Module $psdFile.FullName -Force -Verbose
 
 Write-Output "Removing temporary installation files"
 Remove-Item $outfolderPath -Recurse -Force -ErrorAction "SilentlyContinue"
+
+if (Get-Module -Name 'PowershellGitGet')
+{
+	Write-Output "Installation Complete"
+}
+else
+{
+	Write-Output "Installation Failed"
+}
