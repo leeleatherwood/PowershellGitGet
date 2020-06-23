@@ -20,4 +20,5 @@ Remove-Item $moduleDestination -Recurse -Force -ErrorAction "SilentlyContinue"
 New-Item -Path $moduleDestination -ItemType "Directory" -Force | out-null
 Copy-Item -Path "$($psdFile.DirectoryName)\*" -Destination $moduleDestination -Recurse -Force
 
-Import-Module $moduleDestination -Force -Verbose
+$psdFile = Get-ChildItem –Path $moduleDestination -Include "*.psd1" -Recurse
+Import-Module $psdFile.FullName -Force -Verbose
