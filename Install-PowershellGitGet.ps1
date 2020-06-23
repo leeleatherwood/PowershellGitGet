@@ -14,7 +14,6 @@ $psdData = Import-PowerShellDataFile -LiteralPath $psdFile.FullName
 $psModulePath = ([Environment]::GetEnvironmentVariable("PSModulePath", "Machine")).Split(";")[-1]
 $moduleDestination = "$psModulePath\PowershellGitGet\" + $psdData.ModuleVersion
 
-Uninstall-Module -Name 'PowershellGitGet' -Force
 Remove-Item $moduleDestination -Recurse -Force -ErrorAction "SilentlyContinue"
 New-Item -Path $moduleDestination -ItemType "Directory" -Force | out-null
 Copy-Item -Path "$($psdFile.DirectoryName)\*" -Destination $moduleDestination -Recurse -Force
