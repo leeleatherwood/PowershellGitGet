@@ -19,3 +19,5 @@ $moduleDestination = "$psModulePath\$moduleName\" + $psdData.ModuleVersion
 Remove-Item $moduleDestination -Recurse -Force -ErrorAction "SilentlyContinue"
 New-Item -Path $moduleDestination -ItemType "Directory" -Force | out-null
 Copy-Item -Path "$($psdFile.DirectoryName)\*" -Destination $moduleDestination -Recurse -Force
+
+Import-Module $moduleDestination -Force -Verbose
