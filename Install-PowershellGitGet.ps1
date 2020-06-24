@@ -1,6 +1,8 @@
 ﻿[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 $gitURL = "https://github.com/leeleatherwood/PowershellGitGet.git"
+$psModulePath = "C:\Program Files\WindowsPowerShell\Modules"
+
 $archiveURL = $GitURL.Replace(".git","/archive/master.zip")
 $outfilePath = $env:TEMP + "\" + $gitURL.Split("/")[-1] + ".zip"
 $outfolderPath = $outfilePath.Replace(".zip","")
@@ -11,7 +13,6 @@ Expand-Archive -LiteralPath $outfilePath -DestinationPath $outfolderPath
 
 $psdFile = Get-ChildItem –Path $outfolderPath -Include "*.psd1" -Recurse
 $psdData = Import-PowerShellDataFile -LiteralPath $psdFile.FullName
-$psModulePath = ([Environment]::GetEnvironmentVariable("PSModulePath", "Machine")).Split(";")[-1]
 $moduleDestination = "$psModulePath\PowershellGitGet\" + $psdData.ModuleVersion
 
 Remove-Item $moduleDestination -Recurse -Force -ErrorAction "SilentlyContinue"
