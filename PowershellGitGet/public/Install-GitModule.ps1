@@ -50,9 +50,10 @@
 
 	# Import-Module -Name $psdFile.FullName -Force -Verbose
 
+	$psdData = Import-PowerShellDataFile -LiteralPath $psdFile.FullName
+
 	Write-Output "Installing Powershell Module $($psdFile.BaseName) $($psdData.ModuleVersion)"
 
-	$psdData = Import-PowerShellDataFile -LiteralPath $psdFile.FullName
 	$moduleDestination = "C:\Program Files\WindowsPowerShell\Modules\" + $psdFile.BaseName + "\" + $psdData.ModuleVersion
 
 	Remove-Item $moduleDestination -Recurse -Force -ErrorAction 'SilentlyContinue'
