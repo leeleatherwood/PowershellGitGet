@@ -1,4 +1,4 @@
-﻿function Import-GitModule
+﻿function Install-GitModule
 {
 	Param(
 		[Parameter(Mandatory=$True)]
