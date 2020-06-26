@@ -23,6 +23,8 @@
 
 	[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
+	Write-Output "Downloading git archive $archiveURL"
+
 	if ($Username -and $Password)
 	{
 		$credString = "{0}:{1}" -f $Username,$Password
@@ -42,11 +44,13 @@
 
 	if ($psdFile -eq $null)
 	{
-		Write-Error "Invalid Module"
+		Write-Error "Invalid Powershell Module"
 		return
 	}
 
 	# Import-Module -Name $psdFile.FullName -Force -Verbose
+
+	Write-Output "Installing Powershell Module $($psdFile.BaseName) $($psdData.ModuleVersion)"
 
 	$psdData = Import-PowerShellDataFile -LiteralPath $psdFile.FullName
 	$moduleDestination = "C:\Program Files\WindowsPowerShell\Modules\" + $psdFile.BaseName + "\" + $psdData.ModuleVersion
@@ -54,4 +58,8 @@
 	Remove-Item $moduleDestination -Recurse -Force -ErrorAction 'SilentlyContinue'
 	New-Item -Path $moduleDestination -ItemType 'Directory' -Force | out-null
 	Copy-Item -Path "$($psdFile.DirectoryName)\*" -Destination $moduleDestination -Recurse -Force
+
+	Write-Output "Installation Complete"
+
+	return $psdData
 }
